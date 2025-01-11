@@ -1,6 +1,6 @@
-package com.example.bincardapp.features.bin_lookup.data.models
+package com.example.bincardapp.features.bin_lookup.domain.model
 
-data class BankInfoDto(
+data class BankInfoModel(
     val name: String,
     val url: String,
     val phone: String,

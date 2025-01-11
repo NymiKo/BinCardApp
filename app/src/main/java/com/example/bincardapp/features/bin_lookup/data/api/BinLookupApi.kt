@@ -1,6 +1,6 @@
-package com.example.bincardapp.features.bin_lookup.data
+package com.example.bincardapp.features.bin_lookup.data.api
 
-import com.example.bincardapp.features.bin_lookup.data.models.BinInfoDto
+import com.example.bincardapp.features.bin_lookup.data.api.models.BinInfoDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

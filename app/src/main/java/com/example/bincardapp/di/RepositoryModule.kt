@@ -1,0 +1,17 @@
+package com.example.bincardapp.di
+
+import com.example.bincardapp.features.bin_lookup.data.repository.BinLookupRepositoryImpl
+import com.example.bincardapp.features.bin_lookup.domain.BinLookupRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface RepositoryModule {
+    @Binds
+    @Singleton
+    fun bindBinLookupRepository(binLookupRepositoryImpl: BinLookupRepositoryImpl): BinLookupRepository
+}
