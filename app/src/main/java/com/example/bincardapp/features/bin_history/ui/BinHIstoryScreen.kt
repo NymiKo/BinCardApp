@@ -28,6 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bincardapp.R
+import com.example.bincardapp.core.ui.common.ClickableTextInBinInfo
+import com.example.bincardapp.extensions.openMap
+import com.example.bincardapp.extensions.openPhone
 import com.example.bincardapp.features.bin_history.presentation.BinHistoryViewModel
 import kotlinx.serialization.Serializable
 
@@ -48,6 +53,8 @@ fun BinHistoryScreen(
     onBack: () -> Unit,
 ) {
     val binHistoryList = viewModel.binHistoryList.collectAsStateWithLifecycle(emptyList()).value
+    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -106,17 +113,33 @@ fun BinHistoryScreen(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(text = stringResource(R.string.country, binInfo.countryInfo.name))
-                            Text(
-                                text = stringResource(
-                                    R.string.coordinates,
+                            ClickableTextInBinInfo(
+                                text = stringResource(R.string.coordinates),
+                                clickableText = stringResource(
+                                    R.string.latitude_and_longitude,
                                     binInfo.countryInfo.latitude,
                                     binInfo.countryInfo.longitude
-                                )
+                                ),
+                                interactionListener = {
+                                    openMap(
+                                        context,
+                                        binInfo.countryInfo.latitude,
+                                        binInfo.countryInfo.longitude
+                                    )
+                                }
                             )
                             Text(text = stringResource(R.string.card_type, binInfo.cardType))
                             Text(text = stringResource(R.string.bank_name, binInfo.bankInfo.name))
-                            Text(text = stringResource(R.string.bank_url, binInfo.bankInfo.url))
-                            Text(text = stringResource(R.string.bank_phone, binInfo.bankInfo.phone))
+                            ClickableTextInBinInfo(
+                                text = stringResource(R.string.url),
+                                clickableText = binInfo.bankInfo.url,
+                                interactionListener = { uriHandler.openUri("https://${binInfo.bankInfo.url}") }
+                            )
+                            ClickableTextInBinInfo(
+                                text = stringResource(R.string.phone),
+                                clickableText = binInfo.bankInfo.phone,
+                                interactionListener = { openPhone(context, binInfo.bankInfo.phone) }
+                            )
                             Text(text = stringResource(R.string.bank_city, binInfo.bankInfo.city))
                         }
                     }

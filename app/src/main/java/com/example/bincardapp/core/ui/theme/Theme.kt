@@ -1,4 +1,4 @@
-package com.example.bincardapp.core.ui_style.theme
+package com.example.bincardapp.core.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

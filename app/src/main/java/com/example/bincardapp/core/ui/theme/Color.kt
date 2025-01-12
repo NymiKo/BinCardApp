@@ -1,4 +1,4 @@
-package com.example.bincardapp.core.ui_style.theme
+package com.example.bincardapp.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

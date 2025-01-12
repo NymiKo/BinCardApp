@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">BINCardApp</string>
     <string name="country">Страна: %s</string>
-    <string name="coordinates">Координаты: %1$d°ш.,%2$d°д.</string>
+    <string name="coordinates">Координаты</string>
+    <string name="latitude_and_longitude">%1$d°ш.,%2$d°д.</string>
     <string name="card_type">Тип карты: %s</string>
-    <string name="bank_url">Url: %s</string>
-    <string name="bank_phone">Телефон: %s</string>
+    <string name="url">Url</string>
+    <string name="phone">Телефон</string>
     <string name="bank_city">Город: %s</string>
     <string name="bank_name">Название: %s</string>
     <string name="bin_label">1234 5678</string>

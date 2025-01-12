@@ -24,8 +24,8 @@ class BinLookupRepositoryImpl @Inject constructor(
                 bin = bin,
                 countryInfo = CountryInfoModel(
                     name = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
-                    latitude = 56,
-                    longitude = 10,
+                    latitude = 17,
+                    longitude = 78,
                 ),
                 cardType = "Visa",
                 bankInfo = BankInfoModel(
