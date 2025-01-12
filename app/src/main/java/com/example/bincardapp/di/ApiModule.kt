@@ -1,6 +1,6 @@
 package com.example.bincardapp.di
 
-import com.example.bincardapp.features.bin_lookup.data.api.BinLookupApi
+import com.example.bincardapp.data.api.bin_lookup.BinLookupApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

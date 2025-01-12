@@ -1,14 +1,14 @@
-package com.example.bincardapp.features.bin_lookup.data.api
+package com.example.bincardapp.data.api.bin_lookup.mapper
 
-import com.example.bincardapp.features.bin_lookup.data.api.models.BankInfoDto
-import com.example.bincardapp.features.bin_lookup.data.api.models.BinInfoDto
-import com.example.bincardapp.features.bin_lookup.data.api.models.CountryInfoDto
+import com.example.bincardapp.data.api.bin_lookup.models.BankInfoDto
+import com.example.bincardapp.data.api.bin_lookup.models.BinInfoDto
+import com.example.bincardapp.data.api.bin_lookup.models.CountryInfoDto
 import com.example.bincardapp.features.bin_lookup.domain.model.BankInfoModel
 import com.example.bincardapp.features.bin_lookup.domain.model.BinInfoModel
 import com.example.bincardapp.features.bin_lookup.domain.model.CountryInfoModel
 
-fun BinInfoDto.toBinInfoModel() = BinInfoModel(
-    countryInfo.toCountryInfoModel(), cardType ?: "-", bankInfo.toBankInfoModel()
+fun BinInfoDto.toBinInfoModel(bin: String) = BinInfoModel(
+    bin, countryInfo.toCountryInfoModel(), cardType ?: "-", bankInfo.toBankInfoModel()
 )
 
 fun BankInfoDto.toBankInfoModel() = BankInfoModel(

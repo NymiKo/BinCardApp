@@ -1,4 +1,4 @@
-package com.example.bincardapp.data
+package com.example.bincardapp.data.api
 
 import retrofit2.Response
 import java.net.UnknownHostException

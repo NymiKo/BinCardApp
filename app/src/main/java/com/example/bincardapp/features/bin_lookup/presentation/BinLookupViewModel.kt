@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bincardapp.R
 import com.example.bincardapp.core.models.TextField
-import com.example.bincardapp.data.NetworkResult
+import com.example.bincardapp.data.api.NetworkResult
 import com.example.bincardapp.features.bin_lookup.domain.BinLookupRepository
 import com.example.bincardapp.features.bin_lookup.domain.model.BinInfoModel
 import dagger.hilt.android.lifecycle.HiltViewModel

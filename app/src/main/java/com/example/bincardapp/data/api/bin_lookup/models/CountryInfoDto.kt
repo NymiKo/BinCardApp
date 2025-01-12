@@ -1,4 +1,4 @@
-package com.example.bincardapp.features.bin_lookup.data.api.models
+package com.example.bincardapp.data.api.bin_lookup.models
 
 import com.google.gson.annotations.SerializedName
 

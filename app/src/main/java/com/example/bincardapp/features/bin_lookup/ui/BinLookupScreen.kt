@@ -58,11 +58,16 @@ import com.example.bincardapp.core.ui_style.theme.LightBlue
 import com.example.bincardapp.features.bin_lookup.presentation.BinLookupScreenEvents
 import com.example.bincardapp.features.bin_lookup.presentation.BinLookupViewModel
 import com.example.bincardapp.features.bin_lookup.ui.components.BinMaskVisualTransformation
+import kotlinx.serialization.Serializable
+
+@Serializable
+object BinLookupRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BinLookupScreen(
     viewModel: BinLookupViewModel = hiltViewModel(),
+    onBinHistoryScreen: () -> Unit,
 ) {
     val isLoading = viewModel.isLoading
     val binInfo = viewModel.binInfo
@@ -179,7 +184,7 @@ internal fun BinLookupScreen(
                     containerColor = LightBlue,
                     contentColor = White,
                 ),
-                onClick = {}
+                onClick = onBinHistoryScreen::invoke
             ) {
                 Text(text = stringResource(R.string.request_history))
                 Spacer(modifier = Modifier.weight(1F))

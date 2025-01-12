@@ -1,5 +1,7 @@
 package com.example.bincardapp.di
 
+import com.example.bincardapp.features.bin_history.data.BinHistoryRepositoryImpl
+import com.example.bincardapp.features.bin_history.domain.BinHistoryRepository
 import com.example.bincardapp.features.bin_lookup.data.repository.BinLookupRepositoryImpl
 import com.example.bincardapp.features.bin_lookup.domain.BinLookupRepository
 import dagger.Binds
@@ -14,4 +16,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindBinLookupRepository(binLookupRepositoryImpl: BinLookupRepositoryImpl): BinLookupRepository
+
+    @Binds
+    @Singleton
+    fun bindBinHistoryRepository(binHistoryRepositoryImpl: BinHistoryRepositoryImpl): BinHistoryRepository
 }

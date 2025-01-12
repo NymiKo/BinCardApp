@@ -1,6 +1,6 @@
 package com.example.bincardapp.features.bin_lookup.domain
 
-import com.example.bincardapp.data.NetworkResult
+import com.example.bincardapp.data.api.NetworkResult
 import com.example.bincardapp.features.bin_lookup.domain.model.BinInfoModel
 
 interface BinLookupRepository {
