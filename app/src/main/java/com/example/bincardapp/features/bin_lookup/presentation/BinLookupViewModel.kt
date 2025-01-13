@@ -33,10 +33,7 @@ class BinLookupViewModel @Inject constructor(
     fun onEvent(event: BinLookupScreenEvents) {
         when (event) {
             BinLookupScreenEvents.GetBinInfo -> getBinInfo()
-            is BinLookupScreenEvents.BinValueChanged -> {
-                binTextFieldState = binTextFieldState.copy(value = event.newValue, isError = false)
-                if (event.newValue.isEmpty()) binInfo = null
-            }
+            is BinLookupScreenEvents.BinValueChanged -> binValueChanged(event.newValue)
         }
     }
 
@@ -77,6 +74,13 @@ class BinLookupViewModel @Inject constructor(
 
             else -> return true
         }
+    }
+
+    private fun binValueChanged(newValue: String) {
+        if (newValue.all(Char::isDigit)) {
+            binTextFieldState = binTextFieldState.copy(value = newValue, isError = false)
+        }
+        if (newValue.isEmpty()) binInfo = null
     }
 
     private fun errorHandler(code: Int): Int? {

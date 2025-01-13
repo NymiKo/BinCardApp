@@ -11,7 +11,7 @@ import androidx.compose.ui.text.withLink
 import com.example.bincardapp.core.ui.theme.LightBlue
 
 @Composable
-fun ClickableTextInBinInfo(
+fun CommonClickableText(
     text: String,
     clickableText: String,
     interactionListener: () -> Unit,

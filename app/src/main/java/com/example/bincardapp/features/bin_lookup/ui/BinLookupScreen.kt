@@ -1,6 +1,5 @@
 package com.example.bincardapp.features.bin_lookup.ui
 
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,9 +43,6 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,10 +52,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bincardapp.R
 import com.example.bincardapp.core.models.TextField
-import com.example.bincardapp.core.ui.common.ClickableTextInBinInfo
+import com.example.bincardapp.core.ui.common.ColumnBinInfo
 import com.example.bincardapp.core.ui.theme.LightBlue
-import com.example.bincardapp.extensions.openMap
-import com.example.bincardapp.extensions.openPhone
+import com.example.bincardapp.features.bin_lookup.domain.model.BinInfoModel
 import com.example.bincardapp.features.bin_lookup.presentation.BinLookupScreenEvents
 import com.example.bincardapp.features.bin_lookup.presentation.BinLookupViewModel
 import com.example.bincardapp.features.bin_lookup.ui.components.BinMaskVisualTransformation
@@ -77,12 +72,6 @@ internal fun BinLookupScreen(
     val isLoading = viewModel.isLoading
     val binInfo = viewModel.binInfo
     val errorMessage = viewModel.errorMessage
-    val animatedAlpha = animateFloatAsState(
-        targetValue = if (binInfo != null) 1.0f else 0f,
-        label = "alpha"
-    )
-    val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         topBar = {
@@ -100,33 +89,13 @@ internal fun BinLookupScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(
+            SearchBinRow(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                BinTextField(
-                    modifier = Modifier.weight(1F),
-                    enabled = !isLoading,
-                    binTextFieldState = viewModel.binTextFieldState,
-                    binValueChanged = { viewModel.onEvent(BinLookupScreenEvents.BinValueChanged(it)) }
-                )
-                Button(
-                    modifier = Modifier.size(56.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    contentPadding = PaddingValues(8.dp),
-                    onClick = { viewModel.onEvent(BinLookupScreenEvents.GetBinInfo) },
-                    enabled = !isLoading,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = LightBlue,
-                    )
-                ) {
-                    Image(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = stringResource(R.string.bin_search_button_description),
-                        colorFilter = ColorFilter.tint(White)
-                    )
-                }
-            }
+                enabled = !isLoading,
+                binTextFieldState = viewModel.binTextFieldState,
+                binValueChanged = { viewModel.onEvent(BinLookupScreenEvents.BinValueChanged(it)) },
+                onSearchButtonClick = { viewModel.onEvent(BinLookupScreenEvents.GetBinInfo) }
+            )
             when {
                 isLoading -> {
                     Box(
@@ -147,75 +116,11 @@ internal fun BinLookupScreen(
                 }
 
                 binInfo != null -> {
-                    Card(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .graphicsLayer {
-                                alpha = animatedAlpha.value
-                            }
-                            .fillMaxWidth(),
-                        border = BorderStroke(1.dp, Gray),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Transparent,
-                        ),
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Text(text = stringResource(R.string.country, binInfo.countryInfo.name))
-                            ClickableTextInBinInfo(
-                                text = stringResource(R.string.coordinates),
-                                clickableText = stringResource(
-                                    R.string.latitude_and_longitude,
-                                    binInfo.countryInfo.latitude,
-                                    binInfo.countryInfo.longitude
-                                ),
-                                interactionListener = {
-                                    openMap(
-                                        context,
-                                        binInfo.countryInfo.latitude,
-                                        binInfo.countryInfo.longitude
-                                    )
-                                }
-                            )
-                            Text(text = stringResource(R.string.card_type, binInfo.cardType))
-                            Text(text = stringResource(R.string.bank_name, binInfo.bankInfo.name))
-                            ClickableTextInBinInfo(
-                                text = stringResource(R.string.url),
-                                clickableText = binInfo.bankInfo.url,
-                                interactionListener = { uriHandler.openUri("https://${binInfo.bankInfo.url}") }
-                            )
-                            ClickableTextInBinInfo(
-                                text = stringResource(R.string.phone),
-                                clickableText = binInfo.bankInfo.phone,
-                                interactionListener = { openPhone(context, binInfo.bankInfo.phone) }
-                            )
-                            Text(text = stringResource(R.string.bank_city, binInfo.bankInfo.city))
-                        }
-                    }
+                    CardBinInfo(binInfo = binInfo)
                 }
             }
             Spacer(modifier = Modifier.weight(1F))
-            Button(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = LightBlue,
-                    contentColor = White,
-                ),
-                onClick = onBinHistoryScreen::invoke
-            ) {
-                Text(text = stringResource(R.string.request_history))
-                Spacer(modifier = Modifier.weight(1F))
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = stringResource(R.string.request_history)
-                )
-            }
+            ButtonBinHistory(onClick = onBinHistoryScreen::invoke)
         }
     }
 }
@@ -266,4 +171,88 @@ private fun BinTextField(
         },
         isError = binTextFieldState.isError,
     )
+}
+
+@Composable
+private fun SearchBinRow(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    binTextFieldState: TextField,
+    binValueChanged: (String) -> Unit,
+    onSearchButtonClick: () -> Unit,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        BinTextField(
+            modifier = Modifier.weight(1F),
+            enabled = enabled,
+            binTextFieldState = binTextFieldState,
+            binValueChanged = binValueChanged::invoke
+        )
+        Button(
+            modifier = Modifier.size(56.dp),
+            shape = RoundedCornerShape(12.dp),
+            contentPadding = PaddingValues(8.dp),
+            onClick = onSearchButtonClick::invoke,
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = LightBlue,
+            )
+        ) {
+            Image(
+                imageVector = Icons.Default.Search,
+                contentDescription = stringResource(R.string.bin_search_button_description),
+                colorFilter = ColorFilter.tint(White)
+            )
+        }
+    }
+}
+
+@Composable
+private fun CardBinInfo(
+    modifier: Modifier = Modifier,
+    binInfo: BinInfoModel,
+) {
+    Card(
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        border = BorderStroke(1.dp, Gray),
+        colors = CardDefaults.cardColors(
+            containerColor = Transparent,
+        ),
+    ) {
+        ColumnBinInfo(
+            modifier = Modifier.padding(8.dp),
+            binInfo = binInfo,
+        )
+    }
+}
+
+@Composable
+private fun ButtonBinHistory(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 16.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = LightBlue,
+            contentColor = White,
+        ),
+        onClick = onClick::invoke
+    ) {
+        Text(text = stringResource(R.string.request_history))
+        Spacer(modifier = Modifier.weight(1F))
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = stringResource(R.string.request_history)
+        )
+    }
 }
