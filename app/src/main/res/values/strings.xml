@@ -22,4 +22,5 @@
     <string name="error_request_limit">Превышен лимит запросов</string>
     <string name="request_history">История запросов</string>
     <string name="request_count">Доступно 5 запросов в час</string>
+    <string name="empty_history">Вы не делали запросов</string>
 </resources>

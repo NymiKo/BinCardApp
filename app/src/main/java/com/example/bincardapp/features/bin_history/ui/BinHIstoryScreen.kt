@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
@@ -72,39 +74,52 @@ fun BinHistoryScreen(
     ) { innerPadding ->
         val expandItemsState =
             remember(binHistoryList) { binHistoryList.map { false }.toMutableStateList() }
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding),
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
-            itemsIndexed(binHistoryList) { index, binInfo ->
-                val expand = expandItemsState[index]
-                Card(
-                    modifier = Modifier.animateContentSize(animationSpec = tween(300)),
+            if (binHistoryList.isEmpty()) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = stringResource(R.string.empty_history),
+                )
+            } else {
+                LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { expandItemsState[index] = !expand }
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.bin_item, binInfo.bin),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.weight(1F))
-                        Icon(
-                            modifier = Modifier.rotate(if (expand) 90F else 0F),
-                            imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
-                            contentDescription = null
-                        )
-                    }
-                    if (expand) {
-                        ColumnBinInfo(
-                            modifier = Modifier.padding(16.dp),
-                            binInfo = binInfo,
-                        )
+                    itemsIndexed(binHistoryList) { index, binInfo ->
+                        val expand = expandItemsState[index]
+                        Card(
+                            modifier = Modifier.animateContentSize(animationSpec = tween(300)),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { expandItemsState[index] = !expand }
+                                    .padding(16.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.bin_item, binInfo.bin),
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.weight(1F))
+                                Icon(
+                                    modifier = Modifier.rotate(if (expand) 90F else 0F),
+                                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
+                                    contentDescription = null
+                                )
+                            }
+                            if (expand) {
+                                ColumnBinInfo(
+                                    modifier = Modifier.padding(16.dp),
+                                    binInfo = binInfo,
+                                )
+                            }
+                        }
                     }
                 }
             }
