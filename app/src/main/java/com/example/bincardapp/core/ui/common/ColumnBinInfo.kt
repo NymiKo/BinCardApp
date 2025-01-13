@@ -1,5 +1,6 @@
 package com.example.bincardapp.core.ui.common
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -14,6 +15,7 @@ import com.example.bincardapp.extensions.openMap
 import com.example.bincardapp.extensions.openPhone
 import com.example.bincardapp.features.bin_lookup.domain.model.BinInfoModel
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun ColumnBinInfo(
     modifier: Modifier = Modifier,

@@ -2,7 +2,7 @@ package com.example.bincardapp.di
 
 import com.example.bincardapp.features.bin_history.data.BinHistoryRepositoryImpl
 import com.example.bincardapp.features.bin_history.domain.BinHistoryRepository
-import com.example.bincardapp.features.bin_lookup.data.repository.BinLookupRepositoryImpl
+import com.example.bincardapp.features.bin_lookup.data.BinLookupRepositoryImpl
 import com.example.bincardapp.features.bin_lookup.domain.BinLookupRepository
 import dagger.Binds
 import dagger.Module

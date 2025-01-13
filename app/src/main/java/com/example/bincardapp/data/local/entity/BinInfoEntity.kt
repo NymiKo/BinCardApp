@@ -9,8 +9,8 @@ data class BinInfoEntity(
     @PrimaryKey(autoGenerate = false)
     val bin: String,
     val nameCounty: String,
-    val latitude: Int,
-    val longitude: Int,
+    val latitude: Double,
+    val longitude: Double,
     val cardType: String,
     val nameBank: String,
     val url: String,

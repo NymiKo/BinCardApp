@@ -4,14 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-fun openMap(context: Context, latitude: Int, longitude: Int) {
+fun openMap(context: Context, latitude: Double, longitude: Double) {
     val uri = Uri.parse("geo:$latitude,$longitude")
     val intent = Intent(Intent.ACTION_VIEW, uri)
-    context.startActivity(intent)
-}
-
-fun openUrl(context: Context, url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     context.startActivity(intent)
 }
 

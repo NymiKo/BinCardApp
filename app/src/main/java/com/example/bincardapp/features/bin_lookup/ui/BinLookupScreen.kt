@@ -89,6 +89,11 @@ internal fun BinLookupScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.request_count),
+                textAlign = TextAlign.Center,
+            )
             SearchBinRow(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 enabled = !isLoading,

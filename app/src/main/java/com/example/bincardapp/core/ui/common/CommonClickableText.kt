@@ -19,18 +19,22 @@ fun CommonClickableText(
     Text(
         text = buildAnnotatedString {
             append("$text: ")
-            withLink(
-                LinkAnnotation.Clickable(
-                    tag = text,
-                    styles = TextLinkStyles(
-                        SpanStyle(
-                            color = LightBlue,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    ),
-                    linkInteractionListener = { interactionListener() }
-                )
-            ) {
+            if (clickableText != "-") {
+                withLink(
+                    LinkAnnotation.Clickable(
+                        tag = text,
+                        styles = TextLinkStyles(
+                            SpanStyle(
+                                color = LightBlue,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ),
+                        linkInteractionListener = { interactionListener() }
+                    )
+                ) {
+                    append(clickableText)
+                }
+            } else {
                 append(clickableText)
             }
         }

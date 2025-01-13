@@ -16,5 +16,5 @@ fun BankInfoDto.toBankInfoModel() = BankInfoModel(
 )
 
 fun CountryInfoDto.toCountryInfoModel() = CountryInfoModel(
-    name ?: "-", latitude ?: 0, longitude ?: 0
+    name ?: "-", latitude ?: 0.0, longitude ?: 0.0
 )
