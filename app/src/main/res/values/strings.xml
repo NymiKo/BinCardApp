@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">BINCardApp</string>
+    <string name="country">Страна: %s</string>
+    <string name="coordinates">Координаты</string>
+    <string name="latitude_and_longitude">%1$f°ш.,%2$f°д.</string>
+    <string name="card_type">Тип карты: %s</string>
+    <string name="url">Url</string>
+    <string name="phone">Телефон</string>
+    <string name="bank_city">Город: %s</string>
+    <string name="bank_name">Название: %s</string>
+    <string name="bin_label">1234 5678</string>
+    <string name="bin">BIN</string>
+    <string name="bin_item">BIN: %s</string>
+    <string name="bin_lookup">Поиск информации по номеру BIN</string>
+    <string name="bin_search_button_description">Найти карту по bin</string>
+    <string name="clear_field">Очистить поле</string>
+    <string name="bin_field_supporting_text">Введите первые 6–8 цифр номера карты (BIN)</string>
+    <string name="error_empty_field">Заполните поле!</string>
+    <string name="error_min_length">Длина BIN должна быть не менее 6!</string>
+    <string name="error_no_internet">Проверьте подключение к интернету</string>
+    <string name="error_not_found">Данные не найдены</string>
+    <string name="error_request_limit">Превышен лимит запросов</string>
+    <string name="request_history">История запросов</string>
+    <string name="request_count">Доступно 5 запросов в час</string>
+    <string name="empty_history">Вы не делали запросов</string>
 </resources>

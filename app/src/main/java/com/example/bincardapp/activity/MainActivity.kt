@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.bincardapp.core.ui_style.theme.BINCardAppTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.bincardapp.core.ui.theme.BINCardAppTheme
+import com.example.bincardapp.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BINCardAppTheme {
-
+                AppNavigation(navController = rememberNavController())
             }
         }
     }
